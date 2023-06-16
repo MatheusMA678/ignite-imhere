@@ -4,23 +4,17 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#131016",
-    paddingTop: 75,
-    paddingHorizontal: 24,
+    padding: 24,
   },
   title: {
     color: "#FDFCFE",
     fontSize: 24,
     fontWeight: "bold",
-  },
-  subtitle: {
-    color: "#FDFCFE",
-    fontSize: 20,
-    fontWeight: "bold",
+    marginTop: 48,
   },
   date: {
     color: "#6B6B6B",
     fontSize: 16,
-    marginBottom: 34,
   },
 
   inputContainer: {
@@ -28,7 +22,8 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "stretch",
     gap: 7,
-    marginBottom: 44,
+    marginTop: 36,
+    marginBottom: 42,
   },
   input: {
     flex: 1,
@@ -50,12 +45,30 @@ export const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 24,
   },
+  participantsLabelContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    marginBottom: 16,
+  },
+  participantsLabel: {
+    color: "#FDFCFE",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  participantsCount: {
+    color: "#FDFCFE",
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    fontSize: 12,
+    borderRadius: 999,
+    width: 32,
+    paddingVertical: 2,
+    textAlign: "center",
+    textAlignVertical: "center",
+  },
   emptyParticipantsText: {
     textAlign: "center",
     fontSize: 14,
     color: "#FDFCFE",
-  },
-  participantsList: {
-    paddingTop: 16,
   },
 });

@@ -3,7 +3,6 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  ScrollView,
   FlatList,
   Alert,
 } from "react-native";
@@ -28,21 +27,28 @@ export function Home() {
       return Alert.alert("O participante já existe");
     }
 
+    if (inputValue === "") {
+      return Alert.alert("O nome do participante não pode ser vazio.");
+    }
+
     setParticipants((prev) => {
       return [...prev, inputValue];
     });
     setInputValue("");
   };
 
-  const handleRemoveParticipant = (participant: string) => {
-    Alert.alert("Remover", `Deseja remover o participante ${participant}?`, [
+  const handleRemoveParticipant = (name: string) => {
+    Alert.alert("Remover", `Deseja remover o participante ${name}?`, [
       {
         text: "Não",
         style: "cancel",
       },
       {
         text: "Sim",
-        onPress: () => Alert.alert("Participante removido."),
+        onPress: () =>
+          setParticipants((prev) =>
+            prev.filter((participant) => participant !== name)
+          ),
       },
     ]);
   };
@@ -50,7 +56,7 @@ export function Home() {
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.title}>Nome do evento</Text>
+        <Text style={styles.title}>Im Here</Text>
         <Text style={styles.date}>{formattedDate}</Text>
       </View>
 
@@ -62,6 +68,8 @@ export function Home() {
           cursorColor={"white"}
           onChangeText={(text) => setInputValue(text)}
           value={inputValue}
+          blurOnSubmit
+          onSubmitEditing={handleAddParticipant}
         />
         <TouchableOpacity
           onPress={handleAddParticipant}
@@ -72,9 +80,19 @@ export function Home() {
         </TouchableOpacity>
       </View>
 
-      <View>
-        <Text style={styles.subtitle}>Participantes</Text>
-        {participants.length === 0 ? (
+      <View style={styles.participantsLabelContainer}>
+        <Text style={styles.participantsLabel}>Participantes</Text>
+        <Text style={styles.participantsCount}>{participants.length}</Text>
+      </View>
+
+      <FlatList
+        keyExtractor={(item) => item}
+        data={participants}
+        renderItem={({ item }) => (
+          <ParticipantCard onRemove={handleRemoveParticipant} name={item} />
+        )}
+        showsVerticalScrollIndicator={false}
+        ListEmptyComponent={() => (
           <View style={{ paddingTop: 28 }}>
             <Text style={styles.emptyParticipantsText}>
               Ninguém chegou no evento ainda?
@@ -83,20 +101,8 @@ export function Home() {
               Adicione participantes a sua lista de presença.
             </Text>
           </View>
-        ) : (
-          <FlatList
-            style={styles.participantsList}
-            keyExtractor={(item) => item}
-            data={participants}
-            renderItem={({ item }) => (
-              <ParticipantCard
-                remove={handleRemoveParticipant}
-                participants={item}
-              />
-            )}
-          />
         )}
-      </View>
+      />
     </View>
   );
 }

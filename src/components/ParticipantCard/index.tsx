@@ -2,19 +2,16 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { styles } from "./styles";
 
 interface ParticipantCardProps {
-  participants: string;
-  remove: (participant: string) => void;
+  name: string;
+  onRemove: (participant: string) => void;
 }
 
-export function ParticipantCard({
-  participants,
-  remove,
-}: ParticipantCardProps) {
+export function ParticipantCard({ name, onRemove }: ParticipantCardProps) {
   return (
     <View style={styles.container}>
-      <Text style={styles.participantName}>{participants}</Text>
+      <Text style={styles.participantName}>{name}</Text>
       <TouchableOpacity
-        onPress={() => remove(participants)}
+        onPress={() => onRemove(name)}
         style={styles.button}
         activeOpacity={0.7}
       >
